@@ -50,6 +50,20 @@ export function clearStats() {
   localStorage.removeItem(STORAGE_KEY);
 }
 
+const GOAL_KEY = 'basslab_daily_goal';
+
+export function getDailyGoal() {
+  try {
+    return parseInt(localStorage.getItem(GOAL_KEY)) || 30;
+  } catch {
+    return 30;
+  }
+}
+
+export function setDailyGoal(minutes) {
+  localStorage.setItem(GOAL_KEY, String(Math.max(1, Math.min(600, minutes))));
+}
+
 export function getFilters(type) {
   const sessions = getSessions().filter(s => !type || s.type === (type === 'all' ? s.type : type));
   const seen = new Set();

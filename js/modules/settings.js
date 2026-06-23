@@ -15,6 +15,7 @@ const DEFAULTS = {
   theme: 'dark',
   tuning: 'standard',
   customTuningNotes: ['E', 'A', 'D', 'G'],
+  dailyGoalMinutes: 30,
 };
 
 export function loadSettings(isMobile = false) {

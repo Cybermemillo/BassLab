@@ -16,6 +16,9 @@ import * as improvisation from './improvisation.js';
 import * as improUi from './improvisation-ui.js';
 import * as metronome from './metronome.js';
 import * as metroUi from './metronome-ui.js';
+import * as practiceTime from './practice-time.js';
+import * as routines from './routines.js';
+import * as routinesUi from './routines-ui.js';
 import { initTooltip } from './tooltip.js';
 import { initHelpModal } from './help-modal.js';
 import { loadSettings, saveSettings } from './settings.js';
@@ -66,6 +69,7 @@ function autoSave() {
     theme: state.darkMode ? 'dark' : 'light',
     tuning: state.tuning,
     customTuningNotes: state.customTuningNotes,
+    dailyGoalMinutes: stats.getDailyGoal(),
   });
 }
 
@@ -320,11 +324,14 @@ async function startTraining() {
   const started = training.startTraining({ ...state });
   if (started) {
     state.trainingActive = true;
+    practiceTime.start('training');
   }
 }
 
 function stopTraining() {
   const results = training.stopTraining();
+  practiceTime.stop('training');
+  statsUi.render();
   fretboard.clearTarget();
   if (results) {
     trainingUi.renderResults(results);
@@ -367,6 +374,10 @@ export function init() {
   state.volume        = saved.synthVolume;
   state.tuning        = saved.tuning;
   state.customTuningNotes = saved.customTuningNotes || ['E', 'A', 'D', 'G'];
+
+  if (saved.dailyGoalMinutes) {
+    stats.setDailyGoal(saved.dailyGoalMinutes);
+  }
 
   if (state.tuning === 'custom') {
     state.customTuningMidi = state.customTuningNotes
@@ -536,6 +547,7 @@ export function init() {
       }
       if (state.improvisationActive) {
         const results = improvisation.stop();
+        practiceTime.stop('improvisation');
         if (results) {
           stats.recordImprovisation(results);
           statsUi.render();
@@ -572,8 +584,9 @@ export function init() {
   });
 
   $('#statsClear').addEventListener('click', () => {
-    if (confirm('¿Borrar todas las estadísticas?')) {
+    if (confirm('¿Borrar todas las estadísticas y tiempo de práctica?')) {
       stats.clearStats();
+      practiceTime.clearAll();
       statsUi.render();
       populateStatsFilter();
     }
@@ -585,19 +598,23 @@ export function init() {
         audioEl.play().catch(() => {});
         state.backingActive = true;
         backingUi.setPlayIcon(true);
+        practiceTime.start('backing');
       } else {
         audioEl.pause();
         state.backingActive = false;
         backingUi.setPlayIcon(false);
+        practiceTime.stop('backing');
       }
       return;
     }
     if (backing.isPlaying()) {
       backing.stop();
+      practiceTime.stop('backing');
       state.backingActive = false;
       backingUi.setPlayIcon(false);
       if (state.improvisationActive) {
         const results = improvisation.stop();
+        practiceTime.stop('improvisation');
         if (results) {
           stats.recordImprovisation(results);
           statsUi.render();
@@ -612,9 +629,11 @@ export function init() {
       state.backingActive = true;
       backing.setRootScale(state.rootNote, state.scaleType);
       backing.start();
+      practiceTime.start('backing');
       backingUi.setPlayIcon(true);
       if (state.improvisationActive) {
         improvisation.start(state.rootNote, state.scaleType);
+        practiceTime.start('improvisation');
         improUi.renderActive('—');
       }
     }
@@ -636,8 +655,10 @@ export function init() {
   metroUi.onPlay(() => {
     if (metronome.isPlaying()) {
       metronome.stop();
+      practiceTime.stop('metronome');
     } else {
       metronome.start();
+      practiceTime.start('metronome');
     }
     metroUi.render(metronome.getState());
   });
@@ -668,8 +689,156 @@ export function init() {
     metronome.setAccent(on);
   });
 
+  /* ─── Routines ─── */
+  routinesUi.init();
+
+  let stepModeActive = null;
+
+  function applyStep(step) {
+    if (step.root !== 'current') state.rootNote = step.root;
+    if (step.scaleType) state.scaleType = step.scaleType;
+    state.arpeggioType = step.arpeggioType || 'none';
+    state.soloArpeggio = step.soloArpeggio || false;
+    state.fretFrom = step.fretFrom || 1;
+    state.fretTo = step.fretTo || 12;
+
+    fretboard.renderScale(state);
+    fretboard.applyFretRange(state);
+    updateStepSelects();
+    $('#rootNoteGrid').querySelectorAll('.note-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.note === state.rootNote)
+    );
+
+    stepModeActive = null;
+    stopModes();
+
+    if (step.metronome && !metronome.isPlaying()) {
+      metronome.start();
+      practiceTime.start('metronome');
+      metroUi.render(metronome.getState());
+    }
+
+    if (step.backingStyle && step.backingStyle !== 'none') {
+      backing.setStyle(step.backingStyle);
+      backing.setBpm(step.bpm || 100);
+      backing.setRootScale(state.rootNote, state.scaleType);
+      backing.start();
+      practiceTime.start('backing');
+      backingUi.setPlayIcon(true);
+      backingUi.render(backing.getState());
+    }
+
+    if (step.mode === 'training') {
+      stepModeActive = 'training';
+      training.startTraining({ ...state });
+      practiceTime.start('training');
+      state.trainingActive = true;
+    } else if (step.mode === 'improvisation') {
+      stepModeActive = 'improvisation';
+      improvisation.start(state.rootNote, state.scaleType);
+      practiceTime.start('improvisation');
+      state.improvisationActive = true;
+      improUi.renderActive(step.backingStyle || '—');
+    }
+  }
+
+  function stopModes() {
+    if (state.trainingActive) {
+      training.stopTraining();
+      practiceTime.stop('training');
+      fretboard.clearTarget();
+      trainingUi.renderIdle();
+      state.trainingActive = false;
+    }
+    if (state.improvisationActive) {
+      improvisation.stop();
+      practiceTime.stop('improvisation');
+      improUi.renderIdle();
+      state.improvisationActive = false;
+    }
+    if (backing.isPlaying()) {
+      backing.stop();
+      practiceTime.stop('backing');
+      backingUi.setPlayIcon(false);
+      state.backingActive = false;
+    }
+    if (metronome.isPlaying() && !routines.isPlaying()) {
+      metronome.stop();
+      practiceTime.stop('metronome');
+      metroUi.render(metronome.getState());
+    }
+  }
+
+  function updateStepSelects() {
+    $('#scaleSelect').value = state.scaleType;
+    $('#arpeggioSelect').value = state.arpeggioType;
+    $('#soloArpeggio').checked = state.soloArpeggio;
+    $('#fretFrom').value = state.fretFrom;
+    $('#fretTo').value = state.fretTo;
+    const presets = $('#rangePresets');
+    if (presets) {
+      presets.querySelectorAll('.preset-btn').forEach(b => {
+        const match = RANGE_PRESETS.find(p => p.from === state.fretFrom && p.to === state.fretTo);
+        b.classList.toggle('active', match && b.textContent === match.label);
+      });
+    }
+  }
+
+  routinesUi.onPlay((id) => {
+    const all = routines.getAll();
+    const r = all.find(r => r.id === id);
+    if (!r || !r.steps.length) return;
+
+    stopModes();
+    routines.startPlayer(r);
+  });
+
+  routinesUi.onStop(() => {
+    routines.stopPlayer();
+    stopModes();
+    routinesUi.hidePlayer();
+    fretboard.renderScale(state);
+  });
+
+  routinesUi.onPause(() => { routines.pausePlayer(); });
+  routinesUi.onResume(() => { routines.resumePlayer(); });
+  routinesUi.onSkip(() => { routines.skipStep(); });
+
+  routines.setPlayerCallbacks({
+    onStepStart({ stepIndex, totalSteps, step }) {
+      applyStep(step);
+      const info = routines.getPlayerInfo();
+      routinesUi.showPlayer(info.routineName, step, stepIndex, totalSteps, step.duration);
+      routinesUi.setPlayerButtons(true, false);
+    },
+    onTick({ stepIndex, totalSteps, remaining }) {
+      routinesUi.updatePlayerTimer(remaining);
+      const info = routines.getPlayerInfo();
+      if (info && info.routine && info.routine.steps[stepIndex + 1]) {
+        routinesUi.updatePlayerNext(info.routine.steps[stepIndex + 1].root + ' ' + info.routine.steps[stepIndex + 1].mode);
+      }
+    },
+    onStepEnd() {
+      stopModes();
+    },
+    onPaused() {
+      routinesUi.setPlayerButtons(true, true);
+    },
+    onResumed() {
+      routinesUi.setPlayerButtons(true, false);
+    },
+    onFinish({ totalTime, stepsCompleted }) {
+      stopModes();
+      routinesUi.showPlayerResults(totalTime, stepsCompleted);
+      routinesUi.setPlayerButtons(false, false);
+      fretboard.renderScale(state);
+    },
+  });
+
   backingUi.bindStyleButtons((style) => {
     if (style === 'upload') {
+      practiceTime.stop('improvisation');
+      practiceTime.stop('backing');
       if (improvisation.isActive()) { improvisation.stop(); improUi.renderIdle(); }
       if (audioEl) {
         backing.stop();
@@ -677,11 +846,14 @@ export function init() {
         state.backingActive = true;
         audioEl.play().catch(() => {});
         backingUi.setPlayIcon(true);
+        practiceTime.start('backing');
       } else {
         $('#trackFile').click();
       }
       return;
     }
+    practiceTime.stop('improvisation');
+    practiceTime.stop('backing');
     if (improvisation.isActive()) { improvisation.stop(); improUi.renderIdle(); }
     if (audioEl) { audioEl.pause(); audioEl = null; }
     state.audioMode = 'generated';
@@ -692,6 +864,7 @@ export function init() {
     if (state.backingActive) {
       backing.setRootScale(state.rootNote, state.scaleType);
       backing.start();
+      practiceTime.start('backing');
     }
     backingUi.setPlayIcon(state.backingActive);
   });
@@ -699,6 +872,8 @@ export function init() {
   backingUi.onFileChange((files) => {
     if (!files || !files[0]) return;
     backing.stop();
+    practiceTime.stop('backing');
+    practiceTime.stop('improvisation');
     if (improvisation.isActive()) { improvisation.stop(); improUi.renderIdle(); }
     if (audioEl) { audioEl.pause(); audioEl = null; }
     state.backingActive = false;
@@ -733,6 +908,7 @@ export function init() {
     if (state.improvisationActive) {
       if (backing.isPlaying()) {
         improvisation.start(state.rootNote, state.scaleType);
+        practiceTime.start('improvisation');
         improUi.renderActive('—');
       } else {
         improUi.renderIdle();
@@ -740,6 +916,7 @@ export function init() {
     } else {
       if (improvisation.isActive()) {
         const results = improvisation.stop();
+        practiceTime.stop('improvisation');
         if (results) {
           stats.recordImprovisation(results);
           statsUi.render();

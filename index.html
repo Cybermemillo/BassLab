@@ -118,6 +118,16 @@
         </div>
       </div>
 
+      <div class="control-group" id="routinesPanel">
+        <label class="control-label">Rutinas</label>
+        <div class="routine-list" id="routineList"></div>
+        <div class="routine-toolbar">
+          <button id="routineNewBtn" class="routine-tool-btn">+ Nueva</button>
+          <button id="routineExportBtn" class="routine-tool-btn" title="Exportar rutinas">Exp.</button>
+          <button id="routineImportBtn" class="routine-tool-btn" title="Importar rutinas">Imp.</button>
+        </div>
+      </div>
+
       <div class="control-group">
         <label class="control-label">Rango de trastes</label>
         <div class="range-row">
@@ -320,6 +330,31 @@
           <option value="">Global</option>
         </select>
       </div>
+      <div class="stats-daily" id="statsDaily">
+        <div class="streak-row">
+          <div class="streak-card">
+            <span class="streak-val" id="streakCurrent">0</span>
+            <span class="streak-lbl">Racha actual</span>
+          </div>
+          <div class="streak-card">
+            <span class="streak-val" id="streakMax">0</span>
+            <span class="streak-lbl">R&eacute;cord</span>
+          </div>
+          <div class="streak-card">
+            <span class="streak-val" id="streakToday">0</span>
+            <span class="streak-lbl">Hoy (min)</span>
+          </div>
+        </div>
+        <div class="goal-row">
+          <label class="goal-label">Objetivo diario (min)</label>
+          <input type="number" id="dailyGoalInput" min="1" max="600" value="30" />
+          <div class="goal-meter" id="goalMeter">
+            <div class="goal-fill" id="goalFill"></div>
+          </div>
+          <span class="goal-text" id="goalText"></span>
+        </div>
+        <div class="heatmap-container" id="heatmapContainer"></div>
+      </div>
       <div class="stats-type-tabs" id="statsTypeTabs">
         <button class="stats-tab active" data-type="all">Todo</button>
         <button class="stats-tab" data-type="training">Entrenamiento</button>
@@ -506,7 +541,8 @@
           <li>Filtra adem&aacute;s por <strong>escala/arpegio</strong> con el selector desplegable.</li>
           <li>Ver&aacute;s m&eacute;tricas agregadas (puntuaci&oacute;n media, racha m&aacute;xima, tiempo total) y un <strong>gr&aacute;fico de barras</strong> con las &uacute;ltimas 10 sesiones.</li>
           <li>El <strong>historial</strong> lista todas las sesiones guardadas. Para improvisaci&oacute;n muestra duraci&oacute;n; para entrenamiento muestra aciertos.</li>
-          <li>Usa el bot&oacute;n <strong>&laquo;Borrar datos&raquo;</strong> para eliminar todo el historial.</li>
+          <li>Usa el bot&oacute;n <strong>&laquo;Borrar datos&raquo;</strong> para eliminar todo el historial y tiempo de pr&aacute;ctica.</li>
+          <li>El <strong>calendario</strong> muestra un heatmap con los minutos practicados cada d&iacute;a. La <strong>racha</strong> cuenta d&iacute;as consecutivos con pr&aacute;ctica. Puedes fijar un <strong>objetivo diario</strong> en minutos.</li>
         </ul>
       </section>
 
@@ -521,6 +557,18 @@
           <li>Cambia entre tema oscuro y claro con el bot&oacute;n de <strong>&#9790; / &#9728;</strong> en el header.</li>
         </ul>
       </section>
+
+      <section class="help-section">
+        <h3>10. Rutinas de pr&aacute;ctica</h3>
+        <ul>
+          <li>En el panel izquierdo encontrar&aacute;s <strong>rutinas predefinidas</strong> (Calentamiento, Escalas, Arpegios, Improvisaci&oacute;n) y puedes crear las tuyas propias.</li>
+          <li>Pulsa <strong>&#9654;</strong> en una rutina para iniciar el reproductor: cada paso configura autom&aacute;ticamente la escala, el modo y el tempo.</li>
+          <li>Usa <strong>pausa, saltar o detener</strong> durante la reproducci&oacute;n.</li>
+          <li>Las rutinas predefinidas se pueden <strong>duplicar</strong> para editarlas a tu gusto.</li>
+          <li>Usa <strong>Exportar</strong> e <strong>Importar</strong> para hacer copia de seguridad de tus rutinas o compartirlas entre dispositivos.</li>
+        </ul>
+      </section>
+
     </div>
   </div>
 
@@ -568,6 +616,59 @@
           <input type="checkbox" id="metroAccent" checked />
           <span>Acentuar 1</span>
         </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ROUTINE PLAYER MODAL ===== -->
+  <div class="player-overlay" id="routinePlayerModal">
+    <div class="routine-player-modal">
+      <button class="rp-close" id="rpClose">&times;</button>
+      <h3 class="rp-title" id="rpName"></h3>
+      <div class="rp-desc" id="rpDesc"></div>
+      <div class="rp-step" id="rpStep"></div>
+      <div class="rp-timer" id="rpTimer">0:00</div>
+      <div class="rp-next" id="rpNext"></div>
+      <div class="rp-buttons">
+        <button id="rpPause" class="rp-btn">||</button>
+        <button id="rpSkip" class="rp-btn">>></button>
+        <button id="rpStop" class="rp-btn rp-stop">&#9632;</button>
+      </div>
+      <div class="rp-result" id="rpResult" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- ===== ROUTINE EDITOR MODAL ===== -->
+  <div class="modal-backdrop" id="routineEditorModal">
+    <div class="routine-editor-modal">
+      <h3 id="reTitle">Nueva rutina</h3>
+      <div class="re-field-row">
+        <label>Nombre</label>
+        <input id="reName" class="re-input" maxlength="60" placeholder="Mi rutina" />
+      </div>
+      <div class="re-field-row">
+        <label>Descripción</label>
+        <input id="reDesc" class="re-input" placeholder="Descripción breve" />
+      </div>
+      <div class="re-steps-title">Pasos <button id="reAddStep" class="re-add-step">+</button></div>
+      <div class="re-steps" id="reSteps"></div>
+      <div class="re-actions">
+        <button id="reCancel" class="re-btn re-cancel">Cancelar</button>
+        <button id="reSave" class="re-btn re-save">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== IMPORT MODAL ===== -->
+  <div class="modal-backdrop" id="routineImportModal">
+    <div class="routine-import-modal">
+      <h3>Importar rutinas</h3>
+      <p>Pega el contenido del archivo JSON:</p>
+      <textarea id="riText" class="ri-textarea" rows="8" placeholder="[...]"></textarea>
+      <div class="ri-buttons">
+        <button id="riMerge" class="re-btn re-save">Fusionar</button>
+        <button id="riReplace" class="re-btn">Reemplazar</button>
+        <button id="riCancel" class="re-btn re-cancel">Cancelar</button>
       </div>
     </div>
   </div>
