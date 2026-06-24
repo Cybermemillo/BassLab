@@ -83,6 +83,17 @@
   <!-- ===== MAIN APP ===== -->
   <main class="app-main">
 
+    <!-- ===== MOBILE TABS ===== -->
+    <nav class="mobile-tabs" aria-label="Secciones">
+      <button class="mobile-tab active" data-tab="controls">Controles</button>
+      <button class="mobile-tab" data-tab="fretboard">Diapasón</button>
+      <button class="mobile-tab" data-tab="tuner">Afinador</button>
+      <button class="mobile-tab" data-tab="training">Entrenar</button>
+      <button class="mobile-tab" data-tab="backing">Backing</button>
+    </nav>
+
+    <div class="tab-panel active" data-panel="controls">
+
     <!-- ===== CONTROLS PANEL ===== -->
     <section class="controls-panel" aria-label="Controles">
 
@@ -195,6 +206,10 @@
 
     </section>
 
+    </div>
+
+    <div class="tab-panel" data-panel="fretboard">
+
     <!-- ===== FRETBOARD ===== -->
     <section class="fretboard-section" aria-label="Diapasón">
       <div class="fretboard-wrapper">
@@ -208,6 +223,56 @@
         </div>
       </div>
     </section>
+
+    <!-- ===== LEGEND ===== -->
+    <section class="legend" aria-label="Leyenda">
+      <div class="legend-group">
+        <span class="legend-label">Escala</span>
+        <div class="legend-row">
+          <div class="legend-item">
+            <span class="legend-dot tonic"></span>
+            <span>Tónica</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot scale-note"></span>
+            <span>Escala</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot arpeggio"></span>
+            <span>Arpegio</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot off-scale"></span>
+            <span>Fuera de escala</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot detected"></span>
+            <span>Detectada</span>
+          </div>
+        </div>
+      </div>
+      <div class="legend-group">
+        <span class="legend-label">Improvisación</span>
+        <div class="legend-row">
+          <div class="legend-item">
+            <span class="legend-dot chord-tone"></span>
+            <span>Nota del acorde</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot scale-passing"></span>
+            <span>Nota de paso</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-dot out-scale"></span>
+            <span>Fuera</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    </div>
+
+    <div class="tab-panel" data-panel="tuner">
 
     <!-- ===== TUNER PANEL ===== -->
     <section class="tuner-panel" aria-label="Afinador">
@@ -261,6 +326,10 @@
       </div>
 
     </section>
+
+    </div>
+
+    <div class="tab-panel" data-panel="backing">
 
     <!-- ===== BACKING TRACK ===== -->
     <section class="backing-panel" aria-label="Backing track" id="backingPanel">
@@ -405,6 +474,10 @@
       </details>
     </section>
 
+    </div>
+
+    <div class="tab-panel" data-panel="training">
+
     <!-- ===== TRAINING + STATS LAYOUT ===== -->
     <div class="training-layout full-width">
 
@@ -490,52 +563,6 @@
     </section>
 
     </div>
-
-    <!-- ===== LEGEND ===== -->
-    <section class="legend" aria-label="Leyenda">
-      <div class="legend-group">
-        <span class="legend-label">Escala</span>
-        <div class="legend-row">
-          <div class="legend-item">
-            <span class="legend-dot tonic"></span>
-            <span>Tónica</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot scale-note"></span>
-            <span>Escala</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot arpeggio"></span>
-            <span>Arpegio</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot off-scale"></span>
-            <span>Fuera de escala</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot detected"></span>
-            <span>Detectada</span>
-          </div>
-        </div>
-      </div>
-      <div class="legend-group">
-        <span class="legend-label">Improvisación</span>
-        <div class="legend-row">
-          <div class="legend-item">
-            <span class="legend-dot chord-tone"></span>
-            <span>Nota del acorde</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot scale-passing"></span>
-            <span>Nota de paso</span>
-          </div>
-          <div class="legend-item">
-            <span class="legend-dot out-scale"></span>
-            <span>Fuera</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
   </main>
 

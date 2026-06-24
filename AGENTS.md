@@ -25,6 +25,7 @@ BassLab is a vanilla HTML/CSS/JS interactive bass guitar trainer. Single page, n
 - `js/modules/fretboard.js` — SVG-like DOM rendering of the fretboard
 - `js/modules/help-modal.js` — help modal (open/close, body scroll lock)
 - `js/modules/news-modal.js` — news/changelog modal with unread badge
+- `js/modules/mobile-tabs.js` — mobile tab navigation (<600 px)
 - `js/utils/dom.js` — `$(selector)` shorthand
 
 ## State management

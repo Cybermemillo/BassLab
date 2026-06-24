@@ -28,6 +28,7 @@ import { addPointsWithToast } from './achievements-ui.js';
 import { initTooltip } from './tooltip.js';
 import { initHelpModal } from './help-modal.js';
 import { initNewsModal } from './news-modal.js';
+import { initMobileTabs } from './mobile-tabs.js';
 import { loadSettings, saveSettings } from './settings.js';
 
 /* ─── State ─── */
@@ -476,6 +477,7 @@ export function init() {
   initTooltip();
   initHelpModal();
   initNewsModal();
+  initMobileTabs();
 
   setTheme(saved.theme === 'dark');
 
