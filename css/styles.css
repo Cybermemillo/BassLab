@@ -321,18 +321,21 @@ body {
   cursor: pointer;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 960px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: inline-flex; }
   .mobile-control { display: none; }
   .mobile-control.active { display: inline-flex; }
   .header-controls { gap: 0.35rem; position: relative; }
-  .brand-icon { width: 22px; height: 22px; }
-  .brand-name { font-size: 1rem; }
-  .header-inner { padding: 0 0.5rem; }
   #volumeSlider { display: none; }
   .volume-mobile-wrap { display: inline-flex; position: relative; }
   .volume-mobile-wrap.active { display: inline-flex; }
+}
+
+@media (max-width: 640px) {
+  .brand-icon { width: 22px; height: 22px; }
+  .brand-name { font-size: 1rem; }
+  .header-inner { padding: 0 0.5rem; }
 }
 
 /* ===== MAIN LAYOUT ===== */
