@@ -346,3 +346,19 @@
   padding: 32px 16px;
   font-size: 0.85rem;
 }
+
+/* ─── Export/Import buttons ─── */
+.ei-btn-wrap {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.ei-btn {
+  font-size: 0.95rem;
+  color: var(--text-muted, #888);
+  opacity: 0.75;
+}
+.ei-btn:hover {
+  color: var(--text-secondary, #ccc);
+  opacity: 1;
+}

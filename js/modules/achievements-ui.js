@@ -277,6 +277,11 @@ export function init() {
   });
 
   ensureBadge();
+  updateHeaderPoints();
+
+  // Double-check after DOM settles (belt and suspenders for import/load race)
+  requestAnimationFrame(() => updateHeaderPoints());
+  setTimeout(() => updateHeaderPoints(), 200);
 
   const badge = document.getElementById('achBadge');
   if (badge) {
