@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'basslab_improv_records';
+const STORAGE_KEY = 'groovepath_improv_records';
 
 const MASTERY_THRESHOLDS = {
   minSessions: 3,

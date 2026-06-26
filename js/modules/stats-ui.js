@@ -177,7 +177,7 @@ function renderOverview() {
   // Total sessions
   let totalSessions = 0;
   try {
-    const sessions = JSON.parse(localStorage.getItem('basslab_stats')) || [];
+    const sessions = JSON.parse(localStorage.getItem('groovepath_stats')) || [];
     totalSessions = sessions.length;
   } catch {}
 
@@ -195,7 +195,7 @@ function renderOverview() {
   // Top root/scale
   let topLabel = '\u2014';
   try {
-    const sessions = JSON.parse(localStorage.getItem('basslab_stats')) || [];
+    const sessions = JSON.parse(localStorage.getItem('groovepath_stats')) || [];
     const counts = {};
     sessions.forEach(s => {
       if (s.type === 'training') {

@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'basslab_routines';
+const STORAGE_KEY = 'groovepath_routines';
 
 const PREDEFINED = [
   {
@@ -114,7 +114,7 @@ export function exportAll() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'basslab_routines.json';
+  a.download = 'groovepath_routines.json';
   a.click();
   URL.revokeObjectURL(url);
 }

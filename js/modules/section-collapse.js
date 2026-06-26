@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'basslab_collapsed_sections';
+const STORAGE_KEY = 'groovepath_collapsed_sections';
 
 let collapsed = {};
 

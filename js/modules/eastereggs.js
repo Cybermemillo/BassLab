@@ -29,7 +29,7 @@ function logEastereggMessage() {
     '%c',
     '%c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500',
     '%cNota del desarrollador:',
-    '%cTodo BassLab est\u00E1 hecho en JavaScript y se ejecuta en tu navegador.',
+    '%cTodo Groovepath est\u00E1 hecho en JavaScript y se ejecuta en tu navegador.',
     '%cEso significa que cualquiera puede abrir la consola y modificar',
     '%cpuntos, estad\u00EDsticas, logros o cualquier otra cosa si lo desea.',
     '%c',

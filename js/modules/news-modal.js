@@ -1,12 +1,12 @@
 const $ = (sel) => document.querySelector(sel);
 
-const STORAGE_KEY = 'basslab_news_seen';
+const STORAGE_KEY = 'groovepath_news_seen';
 
 const UPDATES = [
   {
     date: '2026-06-25',
     version: 'v1.4',
-    title: 'BassLab v1.4 \u2014 Gamificaci\u00f3n y aprendizaje profundo',
+    title: 'Groovepath v1.4 \u2014 Gamificaci\u00f3n y aprendizaje profundo',
     body: 'Fase 3 del modo improvisaci\u00f3n: ' +
       'r\u00e9cords personales por estilo/dificultad/modo. ' +
       'Mini-desaf\u00edos por sesi\u00f3n con bonus de puntos (5 notas del acorde seguidas, 3 targets, 0 fallos, etc). ' +
@@ -17,8 +17,8 @@ const UPDATES = [
   {
     date: '2026-06-25',
     version: 'v1.3',
-    title: 'BassLab v1.3 \u2014 Ritmo y escucha guiada',
-    body: 'Fase 2 del modo improvisaci\u00f3n: ' +
+    title: 'Groovepath v1.3 \u2014 Ritmo y escucha guiada',
+    body: 'Fase 1 del modo improvisaci\u00f3n: ' +
       'pulso visual de beat (4 puntos) sincronizado con la pista y barra de progreso del comp\u00e1s. ' +
       'Cuenta atr\u00e1s visual del cambio de acorde (flash en el \u00faltimo beat). ' +
       'Modo escucha-y-repite: la nota objetivo suena al aparecer y se repite cada 1.8 s mientras no la aciertes. ' +
@@ -27,7 +27,7 @@ const UPDATES = [
   {
     date: '2026-06-25',
     version: 'v1.2',
-    title: 'BassLab v1.2 \u2014 Mejoras del modo improvisaci\u00f3n',
+    title: 'Groovepath v1.2 \u2014 Mejoras del modo improvisaci\u00f3n',
     body: 'Fase 1 de la reescritura del modo improvisaci\u00f3n: ' +
       'mostrar funciones del acorde (R, 3, 5, 7) en el diapas\u00f3n durante la sesi\u00f3n (toggle opcional). ' +
       'Sincronizaci\u00f3n del objetivo guiado al reloj de audio: los cambios de BPM ya no desajustan el target. ' +
@@ -37,7 +37,7 @@ const UPDATES = [
   {
     date: '2026-06-25',
     version: 'v1.1',
-    title: 'BassLab v1.1 \u2014 Juice y mejoras de UX',
+    title: 'Groovepath v1.1 \u2014 Juice y mejoras de UX',
     body: 'Entrenamiento m\u00e1s jugoso: animaciones de acierto y fallo, pop en la racha, colores por nivel de combo, barra de progreso, cuenta atr\u00e1s con colores y resultados animados con rango S/A/B/C. ' +
       'Modo guiado de improvisaci\u00f3n mejorado: temporizador circular, indicador de calentamiento, feedback por tipo de acierto, resaltado dorado en el diapas\u00f3n, colores de racha. ' +
       'Diapas\u00f3n sticky real en escritorio (sin l\u00edmite del contenedor). ' +
@@ -47,7 +47,7 @@ const UPDATES = [
   {
     date: '2026-06-24',
     version: 'v1.0',
-    title: 'BassLab v1.0 \u2014 Lanzamiento estable',
+    title: 'Groovepath v1.0 \u2014 Lanzamiento estable',
     body: 'Primera versi\u00f3n completa del entrenador de bajo. Incluye diapas\u00f3n interactivo, entrenamiento con micr\u00f3fono, afinador crom\u00e1tico, backing tracks (9 estilos), improvisaci\u00f3n guiada, metr\u00f3nomo, rutinas personalizables, estad\u00edsticas con gr\u00e1ficos y sistema de logros.',
   },
   {

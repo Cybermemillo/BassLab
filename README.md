@@ -1,4 +1,4 @@
-# BassLab
+# Groovepath
 
 Entrenador interactivo de bajo eléctrico de 4 cuerdas. Visualiza escalas y arpegios en un diapasón interactivo, afina con el micrófono, practica con entrenamiento de notas e intervalos, improvisa sobre backing tracks y sigue tus estadísticas.
 

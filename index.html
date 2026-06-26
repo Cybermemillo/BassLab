@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Entrenador interactivo de bajo el&eacute;ctrico. Diapas&oacute;n, afinador, backing tracks, improvisaci&oacute;n y estad&iacute;sticas." />
+  <meta name="description" content="Groovepath es un entrenador interactivo de bajo el&eacute;ctrico: diapas&oacute;n, escalas, arpegios, afinador por micr&oacute;fono, backing tracks, improvisaci&oacute;n guiada, metr&oacute;nomo, rutinas, logros y estad&iacute;sticas. Practica bajo gratis desde el navegador." />
+  <meta name="keywords" content="bajo, bajo el&eacute;ctrico, entrenador de bajo, aprender bajo, escalas de bajo, arpegios de bajo, backing track, afinador de bajo, metr&oacute;nomo, improvisaci&oacute;n, groovepath" />
+  <meta name="author" content="Memo" />
+  <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#41B39A" />
-  <title>BassLab</title>
+  <link rel="canonical" href="https://cybermemillo.github.io/Groovepath/" />
+  <meta property="og:title" content="Groovepath - Entrenador interactivo de bajo el&eacute;ctrico" />
+  <meta property="og:description" content="Practica bajo el&eacute;ctrico con diapas&oacute;n interactivo, afinador, backing tracks, improvisaci&oacute;n guiada y estad&iacute;sticas. Gratis en el navegador." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cybermemillo.github.io/Groovepath/" />
+  <meta property="og:image" content="https://cybermemillo.github.io/Groovepath/favicon_io/apple-touch-icon.png" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Groovepath" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Groovepath - Entrenador interactivo de bajo el&eacute;ctrico" />
+  <meta name="twitter:description" content="Practica bajo el&eacute;ctrico con diapas&oacute;n interactivo, afinador, backing tracks, improvisaci&oacute;n guiada y estad&iacute;sticas." />
+  <meta name="twitter:image" content="https://cybermemillo.github.io/Groovepath/favicon_io/apple-touch-icon.png" />
+  <title>Groovepath - Entrenador interactivo de bajo el&eacute;ctrico</title>
   <link rel="icon" type="image/x-icon" href="favicon_io/favicon.ico" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon_io/favicon-16x16.png" />
@@ -17,6 +32,30 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link rel="stylesheet" href="./css/styles.css" />
   <link rel="stylesheet" href="./css/achievements.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Groovepath",
+    "applicationCategory": "MusicApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requiere un navegador moderno con JavaScript y Web Audio API.",
+    "description": "Entrenador interactivo de bajo el&eacute;ctrico con diapas&oacute;n, afinador, backing tracks, improvisaci&oacute;n guiada, metr&oacute;nomo, rutinas, logros y estad&iacute;sticas.",
+    "url": "https://cybermemillo.github.io/Groovepath/",
+    "image": "https://cybermemillo.github.io/Groovepath/favicon_io/apple-touch-icon.png",
+    "author": {
+      "@type": "Person",
+      "name": "Memo"
+    },
+    "inLanguage": "es",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "featureList": "Interactive fretboard, tuner, backing tracks, improvisation mode, metronome, routines, achievements, statistics"
+  }
+  </script>
 </head>
 <body class="dark">
 
@@ -24,8 +63,8 @@
   <header class="app-header">
     <div class="header-inner">
       <div class="brand">
-        <img src="icon.png" class="brand-icon" id="brandIcon" alt="BassLab" />
-        <span class="brand-name">Bass<span class="brand-lab">Lab</span></span>
+        <img src="icon.png" class="brand-icon" id="brandIcon" alt="Groovepath" />
+        <span class="brand-name">Groovepath</span>
       </div>
       <div class="header-controls">
         <span class="volume-label desktop-only">Volumen</span>
@@ -297,7 +336,7 @@
       <div class="tuner-display">
         <div class="detected-note-wrap" aria-live="polite" aria-atomic="true">
           <span class="detected-label">Nota detectada</span>
-          <div class="detected-note" id="detectedNote">—</div>
+          <div class="detected-note" id="detectedNote">-</div>
           <div class="detected-octave" id="detectedOctave"></div>
         </div>
 
@@ -310,14 +349,14 @@
             </div>
             <div class="meter-labels">
               <span>♭ Bajo</span>
-              <span class="tuner-status" id="tunerStatus" aria-live="polite">—</span>
+              <span class="tuner-status" id="tunerStatus" aria-live="polite">-</span>
               <span>Alto ♯</span>
             </div>
           </div>
         </div>
 
         <div class="tuner-freq">
-          <span id="tunerFreq">— Hz</span>
+          <span id="tunerFreq">- Hz</span>
         </div>
       </div>
 
@@ -395,10 +434,10 @@
       <div class="impro-panel" id="improPanel">
         <div class="impro-config-row">
           <select id="improDifficulty" class="impro-select" title="Dificultad">
-            <option value="four_strings">Four Strings — solo acorde, sin penalizar</option>
-            <option value="walking_bass" selected>Walking Bass — acorde + escala</option>
-            <option value="funk_machine">Funk Machine — solo acorde, afinación precisa</option>
-            <option value="bootsy_level">Bootsy Level — máxima exigencia</option>
+            <option value="four_strings">Four Strings - solo acorde, sin penalizar</option>
+            <option value="walking_bass" selected>Walking Bass - acorde + escala</option>
+            <option value="funk_machine">Funk Machine - solo acorde, afinación precisa</option>
+            <option value="bootsy_level">Bootsy Level - máxima exigencia</option>
           </select>
           <span id="improDiffDesc" class="impro-diff-desc">Acorde + escala · afinación ±30¢ · fallo rompe racha</span>
           <label class="toggle-label" for="improGuided" title="Modo guiado">
@@ -431,7 +470,7 @@
         <div class="impro-divider"></div>
         <div class="impro-bar">
           <span class="impro-chord-label">Acorde</span>
-          <span class="impro-chord" id="improChord">—</span>
+          <span class="impro-chord" id="improChord">-</span>
           <div class="impro-beats" id="improBeats" aria-label="Pulso de beat">
             <span class="beat-dot"></span><span class="beat-dot"></span><span class="beat-dot"></span><span class="beat-dot"></span>
           </div>
@@ -480,19 +519,19 @@
           <div class="impro-result-label">puntos</div>
           <div class="impro-result-grid">
             <div class="impro-result-item">
-              <span class="impro-result-val" id="improResultAcc">—</span>
+              <span class="impro-result-val" id="improResultAcc">-</span>
               <span class="impro-result-lbl">Precisión</span>
             </div>
             <div class="impro-result-item">
-              <span class="impro-result-val" id="improResultHit">—</span>
+              <span class="impro-result-val" id="improResultHit">-</span>
               <span class="impro-result-lbl">Aciertos</span>
             </div>
             <div class="impro-result-item">
-              <span class="impro-result-val" id="improResultStreak">—</span>
+              <span class="impro-result-val" id="improResultStreak">-</span>
               <span class="impro-result-lbl">Mejor racha</span>
             </div>
             <div class="impro-result-item">
-              <span class="impro-result-val" id="improResultTarget">—</span>
+              <span class="impro-result-val" id="improResultTarget">-</span>
               <span class="impro-result-lbl">Objetivos</span>
             </div>
           </div>
@@ -560,7 +599,7 @@
         </div>
         <div class="stat-item">
           <span class="stat-label">Velocidad</span>
-          <span class="stat-value" id="trainingSpeed">—</span>
+          <span class="stat-value" id="trainingSpeed">-</span>
         </div>
       </div>
       <div class="training-feedback" id="trainingFeedback" aria-live="polite">
@@ -599,7 +638,7 @@
       </div>
       <div class="it-mode-info" id="itModeInfo"></div>
       <div class="it-target-wrap">
-        <span class="it-target" id="itTarget">—</span>
+        <span class="it-target" id="itTarget">-</span>
       </div>
       <div class="it-stats">
         <div class="it-stat-item">
@@ -612,7 +651,7 @@
         </div>
         <div class="it-stat-item">
           <span class="it-stat-label">Velocidad</span>
-          <span id="itSpeed">—</span>
+          <span id="itSpeed">-</span>
         </div>
       </div>
       <div class="it-feedback" id="itFeedback" style="display:none" aria-live="polite"></div>
@@ -630,7 +669,7 @@
 
   <!-- ===== FOOTER ===== -->
   <footer class="app-footer">
-    <span class="footer-text">BassLab v1.0 &copy; 2026</span>
+    <span class="footer-text">Groovepath v1.0 &copy; 2026</span>
     <span class="footer-sep">&middot;</span>
     <span class="footer-text">Hecho con <span class="footer-heart">&hearts;</span></span>
   </footer>
@@ -642,7 +681,7 @@
   <div class="help-modal-backdrop" id="helpModalBackdrop">
     <div class="help-modal" id="helpModal">
       <button class="help-modal-close" id="helpModalClose" aria-label="Cerrar ayuda">&times;</button>
-      <h2>&iquest;C&oacute;mo usar BassLab?</h2>
+      <h2>&iquest;C&oacute;mo usar Groovepath?</h2>
 
       <section class="help-section">
         <h3>1. El diapas&oacute;n</h3>
@@ -823,7 +862,7 @@
       <section class="help-section">
         <h3>11. Logros</h3>
         <ul>
-          <li>BassLab incluye <strong>+30 logros</strong> con rarezas (bronce, plata, oro, platino) y logros secretos.</li>
+          <li>Groovepath incluye <strong>+30 logros</strong> con rarezas (bronce, plata, oro, platino) y logros secretos.</li>
           <li>Se desbloquean autom&aacute;ticamente al cumplir condiciones como: rachas de pr&aacute;ctica, sesiones completadas, minutos improvisando, uso del afinador, rutinas, etc.</li>
           <li>Cada logro otorga <strong>puntos</strong> (75 bronce, 200 plata, 400 oro, 800 platino). Los eastereggs tambi&eacute;n dan puntos.</li>
           <li>Al desbloquear un logro ver&aacute;s una notificaci&oacute;n emergente. Puedes consultar todos tus logros desde el icono en el header.</li>

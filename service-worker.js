@@ -1,4 +1,4 @@
-const CACHE = 'basslab-v16';
+const CACHE = 'groovepath-v1';
 const ASSETS = [
   '.',
   'index.html',

@@ -8,20 +8,20 @@ import * as improvisation from './improvisation.js';
 import * as backing from './backing-track.js';
 
 const LS_KEYS = [
-  'basslab_achievements',
-  'basslab_achievements_tracker',
-  'basslab_user_points',
-  'basslab_stats',
-  'basslab_practice_time',
-  'basslab_settings',
-  'basslab_routines',
-  'basslab_daily_goal',
-  'basslab_news_seen',
-  'basslab_collapsed_sections',
+  'groovepath_achievements',
+  'groovepath_achievements_tracker',
+  'groovepath_user_points',
+  'groovepath_stats',
+  'groovepath_practice_time',
+  'groovepath_settings',
+  'groovepath_routines',
+  'groovepath_daily_goal',
+  'groovepath_news_seen',
+  'groovepath_collapsed_sections',
 ];
 
 function log(label, value) {
-  console.log('%c[basslab] %c' + label, 'color:#ffcc00;font-weight:700', 'color:inherit', value !== undefined ? value : '');
+  console.log('%c[groovepath] %c' + label, 'color:#ffcc00;font-weight:700', 'color:inherit', value !== undefined ? value : '');
 }
 
 // ── Helpers ──
@@ -78,42 +78,42 @@ function makeFakeFlashSession() {
 }
 
 // ── API ──
-const basslab = {
+const groovepath = {
   help() {
     console.log(
-      '%c🎸 BassLab Debug Console %cv1.4\n\n' +
+      '%c🎸 Groovepath Debug Console %cv1.4\n\n' +
       '%cComandos disponibles:\n\n' +
-      '  basslab.help()                          → este mensaje\n' +
-      '  basslab.reload()                        → recargar la app\n' +
-      '  basslab.clearAll()                      → borrar TODO localStorage\n' +
-      '  basslab.export()                        → imprimir JSON de localStorage\n\n' +
-      '  basslab.points.add(amt, src, desc)      → sumar puntos\n' +
-      '  basslab.points.total()                  → total de puntos\n' +
-      '  basslab.points.history()                → historial de puntos\n' +
-      '  basslab.points.clear()                  → borrar puntos\n\n' +
-      '  basslab.achievements.unlock(id)         → desbloquear logro por ID\n' +
-      '  basslab.achievements.unlockAll()        → desbloquear todos\n' +
-      '  basslab.achievements.list()             → listar IDs disponibles\n' +
-      '  basslab.achievements.reset()            → borrar progreso de logros\n' +
-      '  basslab.achievements.check()            → evaluar condiciones\n\n' +
-      '  basslab.stats.fakeTraining(opts)        → crear sesión falsa de entrenamiento\n' +
-      '  basslab.stats.fakeImprovisation(opts)   → crear sesión falsa de improvisación\n' +
-      '  basslab.stats.fakeIntervals(opts)       → crear sesión falsa de intervalos\n' +
-      '  basslab.stats.simulateTraining(n)       → generar N sesiones aleatorias\n' +
-      '  basslab.stats.simulateImprovisation(n)  → generar N sesiones aleatorias\n' +
-      '  basslab.stats.clear()                   → borrar sesiones\n' +
-      '  basslab.stats.goal(min)                 → meta diaria en minutos\n\n' +
-      '  basslab.time.add(min, src)              → sumar minutos de práctica\n' +
-      '  basslab.time.today(src?)                → minutos de hoy\n' +
-      '  basslab.time.total()                    → minutos totales\n' +
-      '  basslab.time.clear()                    → borrar tiempo\n\n' +
-      '  basslab.backing.play()                  → iniciar backing track\n' +
-      '  basslab.backing.stop()                  → detener backing track\n' +
-      '  basslab.backing.setBpm(bpm)             → cambiar BPM\n\n' +
-      '  basslab.training.start(rounds)          → iniciar entrenamiento\n' +
-      '  basslab.training.stop()                 → detener entrenamiento\n\n' +
-      '  basslab.impro.start(opts?)              → iniciar improvisación\n' +
-      '  basslab.impro.stop()                    → detener improvisación',
+      '  groovepath.help()                          → este mensaje\n' +
+      '  groovepath.reload()                        → recargar la app\n' +
+      '  groovepath.clearAll()                      → borrar TODO localStorage\n' +
+      '  groovepath.export()                        → imprimir JSON de localStorage\n\n' +
+      '  groovepath.points.add(amt, src, desc)      → sumar puntos\n' +
+      '  groovepath.points.total()                  → total de puntos\n' +
+      '  groovepath.points.history()                → historial de puntos\n' +
+      '  groovepath.points.clear()                  → borrar puntos\n\n' +
+      '  groovepath.achievements.unlock(id)         → desbloquear logro por ID\n' +
+      '  groovepath.achievements.unlockAll()        → desbloquear todos\n' +
+      '  groovepath.achievements.list()             → listar IDs disponibles\n' +
+      '  groovepath.achievements.reset()            → borrar progreso de logros\n' +
+      '  groovepath.achievements.check()            → evaluar condiciones\n\n' +
+      '  groovepath.stats.fakeTraining(opts)        → crear sesión falsa de entrenamiento\n' +
+      '  groovepath.stats.fakeImprovisation(opts)   → crear sesión falsa de improvisación\n' +
+      '  groovepath.stats.fakeIntervals(opts)       → crear sesión falsa de intervalos\n' +
+      '  groovepath.stats.simulateTraining(n)       → generar N sesiones aleatorias\n' +
+      '  groovepath.stats.simulateImprovisation(n)  → generar N sesiones aleatorias\n' +
+      '  groovepath.stats.clear()                   → borrar sesiones\n' +
+      '  groovepath.stats.goal(min)                 → meta diaria en minutos\n\n' +
+      '  groovepath.time.add(min, src)              → sumar minutos de práctica\n' +
+      '  groovepath.time.today(src?)                → minutos de hoy\n' +
+      '  groovepath.time.total()                    → minutos totales\n' +
+      '  groovepath.time.clear()                    → borrar tiempo\n\n' +
+      '  groovepath.backing.play()                  → iniciar backing track\n' +
+      '  groovepath.backing.stop()                  → detener backing track\n' +
+      '  groovepath.backing.setBpm(bpm)             → cambiar BPM\n\n' +
+      '  groovepath.training.start(rounds)          → iniciar entrenamiento\n' +
+      '  groovepath.training.stop()                 → detener entrenamiento\n\n' +
+      '  groovepath.impro.start(opts?)              → iniciar improvisación\n' +
+      '  groovepath.impro.stop()                    → detener improvisación',
       'color:#41B39A;font-size:1.2em',
       'color:#aaa;font-size:0.8em',
       'color:#ccc'
@@ -148,7 +148,7 @@ const basslab = {
         localStorage.setItem(k, typeof data[k] === 'string' ? data[k] : JSON.stringify(data[k]));
       }
     });
-    log('Importados ' + Object.keys(data).length + ' registros. Recarga: basslab.reload()');
+    log('Importados ' + Object.keys(data).length + ' registros. Recarga: groovepath.reload()');
   },
 
   // ── Points ──
@@ -168,7 +168,7 @@ const basslab = {
       return h;
     },
     clear() {
-      localStorage.removeItem('basslab_user_points');
+      localStorage.removeItem('groovepath_user_points');
       log('Puntos borrados');
     },
   },
@@ -187,7 +187,7 @@ const basslab = {
     unlock(id) {
       achievements.checkEasteregg(id);
       achievements.checkAchievements();
-      log('Intentando desbloquear: ' + id + '. Usa basslab.achievements.check() para evaluar.');
+      log('Intentando desbloquear: ' + id + '. Usa groovepath.achievements.check() para evaluar.');
     },
     unlockAll() {
       var ids = ACHIEVEMENTS.map(function (a) { return a.id; });
@@ -196,9 +196,9 @@ const basslab = {
       log('Desbloqueando ' + ids.length + ' logros...');
     },
     reset() {
-      localStorage.removeItem('basslab_achievements');
-      localStorage.removeItem('basslab_achievements_tracker');
-      log('Progreso de logros borrado. Recarga: basslab.reload()');
+      localStorage.removeItem('groovepath_achievements');
+      localStorage.removeItem('groovepath_achievements_tracker');
+      log('Progreso de logros borrado. Recarga: groovepath.reload()');
     },
     check() {
       var result = achievements.checkAchievements();
@@ -252,14 +252,14 @@ const basslab = {
     add(min, source) {
       var src = source || 'debug';
       var sec = (min || 0) * 60;
-      var data = JSON.parse(localStorage.getItem('basslab_practice_time') || '{}');
+      var data = JSON.parse(localStorage.getItem('groovepath_practice_time') || '{}');
       if (!data.total) data.total = {};
       data.total[src] = (data.total[src] || 0) + sec;
       if (!data.daily) data.daily = {};
       var today = new Date().toISOString().slice(0, 10);
       if (!data.daily[today]) data.daily[today] = {};
       data.daily[today][src] = (data.daily[today][src] || 0) + sec;
-      localStorage.setItem('basslab_practice_time', JSON.stringify(data));
+      localStorage.setItem('groovepath_practice_time', JSON.stringify(data));
       log('+' + min + ' min en ' + src + ' (' + sec + ' s)');
     },
     today(source) {
@@ -323,9 +323,9 @@ const basslab = {
 };
 
 export function init() {
-  window.basslab = basslab;
+  window.groovepath = groovepath;
   console.log(
-    '%c🎸 %cBassLab Debug Console %cv1.4%c — Escribe %cbasslab.help()%c para ver comandos',
+    '%c🎸 %cGroovepath Debug Console %cv1.4%c — Escribe %cgroovepath.help()%c para ver comandos',
     'font-size:1.1em',
     'color:#41B39A;font-weight:700',
     'color:#aaa;font-size:0.8em',

@@ -1,7 +1,7 @@
 {
-  "name": "BassLab - Entrenador de Bajo",
-  "short_name": "BassLab",
-  "description": "Entrenador interactivo de bajo eléctrico con diapasón, afinador, backing tracks, improvisación y estadísticas.",
+  "name": "Groovepath — Entrenador de Bajo",
+  "short_name": "Groovepath",
+  "description": "Entrenador interactivo de bajo eléctrico con diapasón, afinador, backing tracks, improvisación guiada, metrónomo y estadísticas. Gratis en el navegador.",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0F0D0A",

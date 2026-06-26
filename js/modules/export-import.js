@@ -1,15 +1,15 @@
-const APP_NAME = 'BassLab';
+const APP_NAME = 'Groovepath';
 const VERSION = 1;
 
 const DATA_KEYS = {
-  settings: 'basslab_settings',
-  stats: 'basslab_stats',
-  practiceTime: 'basslab_practice_time',
-  routines: 'basslab_routines',
-  achievements: 'basslab_achievements',
-  userPoints: 'basslab_user_points',
-  dailyGoal: 'basslab_daily_goal',
-  achievementsTracker: 'basslab_achievements_tracker',
+  settings: 'groovepath_settings',
+  stats: 'groovepath_stats',
+  practiceTime: 'groovepath_practice_time',
+  routines: 'groovepath_routines',
+  achievements: 'groovepath_achievements',
+  userPoints: 'groovepath_user_points',
+  dailyGoal: 'groovepath_daily_goal',
+  achievementsTracker: 'groovepath_achievements_tracker',
 };
 
 function readAllData() {
@@ -116,7 +116,7 @@ export async function exportData(password) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = 'basslab_backup_' + new Date().toISOString().slice(0, 10) + '.json';
+  a.download = 'groovepath_backup_' + new Date().toISOString().slice(0, 10) + '.json';
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -125,7 +125,7 @@ export async function importFromText(jsonText, password) {
   const payload = JSON.parse(jsonText);
 
   if (payload.app !== APP_NAME) {
-    throw new Error('El archivo no es una copia de seguridad de BassLab.');
+    throw new Error('El archivo no es una copia de seguridad de Groovepath.');
   }
   if (!payload.version || payload.version < 1) {
     throw new Error('Versión de copia de seguridad no compatible.');
@@ -236,7 +236,7 @@ export function initExportImport() {
 
       const payload = JSON.parse(text);
       if (payload.app !== APP_NAME) {
-        throw new Error('El archivo no es una copia de seguridad de BassLab.');
+throw new Error('El archivo no es una copia de seguridad de Groovepath.');
       }
 
       let password = null;

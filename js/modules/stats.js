@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'basslab_stats';
+const STORAGE_KEY = 'groovepath_stats';
 
 function getSessions() {
   try {
@@ -68,7 +68,7 @@ export function clearStats() {
   localStorage.removeItem(STORAGE_KEY);
 }
 
-const GOAL_KEY = 'basslab_daily_goal';
+const GOAL_KEY = 'groovepath_daily_goal';
 
 export function getDailyGoal() {
   try {

@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'basslab_practice_time';
+const STORAGE_KEY = 'groovepath_practice_time';
 
 const activeTimers = {};
 

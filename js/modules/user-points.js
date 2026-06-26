@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'basslab_user_points';
+const STORAGE_KEY = 'groovepath_user_points';
 
 function getData() {
   try {

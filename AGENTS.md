@@ -1,7 +1,7 @@
-# AGENTS.md — BassLab
+# AGENTS.md — Groovepath
 
 ## Project overview
-BassLab is a vanilla HTML/CSS/JS interactive bass guitar trainer. Single page, no build step, ES6 modules (`type="module"`). All UI in Spanish. PWA-ready with service worker, manifest and favicon.
+Groovepath is a vanilla HTML/CSS/JS interactive bass guitar trainer. Single page, no build step, ES6 modules (`type="module"`). All UI in Spanish. PWA-ready with service worker, manifest and favicon.
 
 ## Key commands
 - **Serve/run:** open `index.html` in a browser (no server needed)
@@ -31,7 +31,7 @@ BassLab is a vanilla HTML/CSS/JS interactive bass guitar trainer. Single page, n
 ## State management
 - `ui-controls.js` holds a global `state` object (rootNote, scaleType, tuning, micActive, etc.)
 - `improvisationState` object for chord/scale highlighting on fretboard
-- `localStorage` keys: `basslab_settings`, `basslab_stats`, `basslab_practice_time`, `basslab_routines`, `basslab_achievements`, `basslab_user_points`, `basslab_achievements_tracker`, `basslab_daily_goal`, `basslab_news_seen`
+- `localStorage` keys: `groovepath_settings`, `groovepath_stats`, `groovepath_practice_time`, `groovepath_routines`, `groovepath_achievements`, `groovepath_user_points`, `groovepath_achievements_tracker`, `groovepath_daily_goal`, `groovepath_news_seen`
 
 ## Module pattern
 Modules export functions; they communicate via callbacks set from ui-controls.js. Example:

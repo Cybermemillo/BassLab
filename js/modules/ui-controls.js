@@ -70,7 +70,7 @@ let _settingsLoaded = false;
 
 function refreshImprovDailyStreak() {
   try {
-    const raw = localStorage.getItem('basslab_practice_time');
+    const raw = localStorage.getItem('groovepath_practice_time');
     if (!raw) {
       improUi.showDailyStreak(0);
       return;

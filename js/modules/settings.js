@@ -1,4 +1,4 @@
-const KEY = 'basslab_settings';
+const KEY = 'groovepath_settings';
 
 const DEFAULTS = {
   rootNote: 'A',

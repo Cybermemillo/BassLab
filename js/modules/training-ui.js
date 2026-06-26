@@ -16,7 +16,7 @@ const progressWrap = $('#trainingProgress');
 const progressFill = $('#trainingProgressFill');
 const floatsEl  = $('#trainingFloats');
 
-const PREV_STREAK_KEY = '__basslabPrevStreak';
+const PREV_STREAK_KEY = '__groovepathPrevStreak';
 let lastStreak = 0;
 
 export function renderIdle() {

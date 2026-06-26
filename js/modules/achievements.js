@@ -2,12 +2,12 @@ import { ACHIEVEMENTS } from './achievements-data.js';
 import { EASTEREGGS } from './eastereggs-data.js';
 import * as practiceTime from './practice-time.js';
 
-const STORAGE_KEY = 'basslab_achievements';
+const STORAGE_KEY = 'groovepath_achievements';
 
 const ALL_DEFS = [...ACHIEVEMENTS, ...EASTEREGGS];
 
 // ── Tracking accumulators (persisted) ──
-const TRACKER_KEY = 'basslab_achievements_tracker';
+const TRACKER_KEY = 'groovepath_achievements_tracker';
 
 function getTracker() {
   try {
@@ -197,7 +197,7 @@ function getGoalDaysInRow(dailyMs, goalMinutes) {
 
 function getImprovDailyStreak() {
   try {
-    const raw = localStorage.getItem('basslab_practice_time');
+    const raw = localStorage.getItem('groovepath_practice_time');
     if (!raw) return 0;
     const data = JSON.parse(raw);
     const improvDays = new Set();
@@ -241,7 +241,7 @@ function buildSnapshot(unlockedIds) {
   let trainingTotalRounds = 0, trainingCorrect = 0, trainingWrong = 0, trainingMaxStreak = 0, trainingTotalScore = 0;
   let totalReactionWeighted = 0;
   try {
-    const sessions = JSON.parse(localStorage.getItem('basslab_stats')) || [];
+    const sessions = JSON.parse(localStorage.getItem('groovepath_stats')) || [];
     sessions.filter(s => s.type === 'training').forEach(s => {
       trainingTotalRounds += (s.total || 0);
       trainingCorrect += (s.correct || 0);
@@ -257,7 +257,7 @@ function buildSnapshot(unlockedIds) {
   // Compute interval totals
   let intervalsTotalRounds = 0, intervalsCorrect = 0, intervalsWrong = 0, intervalsMaxStreak = 0;
   try {
-    const sessions = JSON.parse(localStorage.getItem('basslab_stats')) || [];
+    const sessions = JSON.parse(localStorage.getItem('groovepath_stats')) || [];
     sessions.filter(s => s.type === 'flashcards').forEach(s => {
       intervalsTotalRounds += (s.total || 0);
       intervalsCorrect += (s.correct || 0);
@@ -270,7 +270,7 @@ function buildSnapshot(unlockedIds) {
 
   const settings = (() => {
     try {
-      return JSON.parse(localStorage.getItem('basslab_settings')) || {};
+      return JSON.parse(localStorage.getItem('groovepath_settings')) || {};
     } catch { return {}; }
   })();
 
@@ -339,7 +339,7 @@ function enrichSnapshot(snap) {
 
   const categories = new Set();
   try {
-    const sessions = JSON.parse(localStorage.getItem('basslab_stats')) || [];
+    const sessions = JSON.parse(localStorage.getItem('groovepath_stats')) || [];
     sessions.forEach(s => {
       if (s.type === 'training') categories.add('training');
       if (s.type === 'improvisation') categories.add('improvisation');
@@ -398,7 +398,7 @@ export function checkAchievements() {
   const today = new Date();
   const todayKey = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
   const todayMinutes = dailyMs[todayKey] || 0;
-  const goal = (() => { try { return JSON.parse(localStorage.getItem('basslab_settings') || '{}').dailyGoalMinutes || 30; } catch { return 30; } })();
+  const goal = (() => { try { return JSON.parse(localStorage.getItem('groovepath_settings') || '{}').dailyGoalMinutes || 30; } catch { return 30; } })();
   if (todayMinutes >= goal && t.dailyGoalAwardedDate !== todayKey) {
     t.dailyGoalAwardedDate = todayKey;
     saveTracker(t);
